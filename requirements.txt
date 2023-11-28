@@ -2,3 +2,4 @@ setuptools
 build
 twine
 SQLAlchemy
+connexion[flask,swagger-ui,uvicorn]
