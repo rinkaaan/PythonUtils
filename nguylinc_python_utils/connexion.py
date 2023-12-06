@@ -3,16 +3,11 @@ import time
 
 import connexion
 from connexion.middleware import MiddlewarePosition
-from flask.cli import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 
-from nguylinc_python_utils.sqlalchemy import init_db
 
-
-def setup_app(base, schema_path, fake_delay=0):
-    load_dotenv()
+def setup_app(session, schema_path, fake_delay=0):
     logging.basicConfig(level=logging.INFO)
-    session = init_db(base)
 
     origins = ["http://localhost:5173", "https://lincolnnguyen.me"]
 
@@ -38,4 +33,4 @@ def setup_app(base, schema_path, fake_delay=0):
         if fake_delay > 0:
             time.sleep(fake_delay)
 
-    return app, session
+    return app
