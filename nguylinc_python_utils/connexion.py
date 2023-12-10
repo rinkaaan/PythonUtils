@@ -6,7 +6,7 @@ from connexion.middleware import MiddlewarePosition
 from starlette.middleware.cors import CORSMiddleware
 
 
-def setup_app(session, schema_path, fake_delay=0):
+def setup_app(schema_path, session=None, fake_delay=0):
     logging.basicConfig(level=logging.INFO)
 
     origins = ["http://localhost:5173", "https://lincolnnguyen.me"]
@@ -26,7 +26,8 @@ def setup_app(session, schema_path, fake_delay=0):
 
     @application.teardown_appcontext
     def shutdown_session(exception=None):
-        session.remove()
+        if session:
+            session.remove()
 
     @application.before_request
     def add_fake_delay():
