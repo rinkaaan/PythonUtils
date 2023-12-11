@@ -11,3 +11,8 @@ def run_command(command, verbose=False):
 
 def rename_at_root(root, old, new):
     os.rename(os.path.join(root, old), os.path.join(root, new))
+
+
+def hello_world():
+    print("Hello World!")
+    return "Hello World!"
