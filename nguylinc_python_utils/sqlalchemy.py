@@ -18,7 +18,7 @@ def deserialize_body(model, body, fields=None):
     return model(**body)
 
 
-def init_db(base, host="127.0.0.1"):
+def init_postgres_db(base, host="127.0.0.1"):
     url = URL.create(
         drivername="postgresql+psycopg",
         username=os.getenv("POSTGRES_USER"),
@@ -29,6 +29,16 @@ def init_db(base, host="127.0.0.1"):
     )
 
     engine = create_engine(url)
+    session = scoped_session(
+        sessionmaker(autoflush=False, bind=engine)
+    )
+    base.query = session.query_property()
+    base.metadata.create_all(bind=engine)
+    return session
+
+
+def init_sqlite_db(base, path="database.db"):
+    engine = create_engine(f"sqlite:///{path}", echo=True)
     session = scoped_session(
         sessionmaker(autoflush=False, bind=engine)
     )
