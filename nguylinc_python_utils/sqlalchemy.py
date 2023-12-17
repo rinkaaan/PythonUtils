@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from sqlalchemy import URL, create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -45,6 +46,22 @@ def init_sqlite_db(base, path="database.db"):
     base.query = session.query_property()
     base.metadata.create_all(bind=engine)
     return session
+
+
+class SessionManager:
+    def __init__(self, base):
+        self.base = base
+        self.session: Union[scoped_session, None] = None
+
+    def update(self, path):
+        if self.session:
+            self.session.close_all()
+        self.session = init_sqlite_db(self.base, path=path)
+
+    def get(self):
+        if not self.session:
+            raise Exception("Session not initialized")
+        return self.session
 
 
 class BaseExtended:
