@@ -38,7 +38,7 @@ def init_postgres_db(base, host="127.0.0.1"):
     return session
 
 
-def init_sqlite_db(base, path="database.db"):
+def init_sqlite_db(base, path="sqlite.db"):
     engine = create_engine(f"sqlite:///{path}", echo=True)
     session = scoped_session(
         sessionmaker(autoflush=False, bind=engine)
@@ -65,6 +65,6 @@ class SessionManager:
 
 
 class BaseExtended:
-    def dump(self):
+    def to_dict(self):
         columns = [c.name for c in self.__table__.columns]
         return {k: v for k, v in vars(self).items() if k in columns}

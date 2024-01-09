@@ -1,3 +1,4 @@
+import datetime
 import os
 import subprocess
 
@@ -54,3 +55,6 @@ def rename_substring_in_files(root_dir, old_substring, new_substring, file_exten
             new_directory = directory.replace(old_substring, new_substring)
             rename_at_root(root, directory, new_directory)
 
+
+def get_timestamp():
+    return datetime.datetime.now(datetime.timezone.utc)

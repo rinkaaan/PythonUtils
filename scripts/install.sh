@@ -1,4 +1,4 @@
-WORKPLACE="$HOME/workplace/SakuinSeizouki"
+WORKPLACE="$HOME/workplace"
 
 (
   cd "$WORKPLACE/PythonUtils"
