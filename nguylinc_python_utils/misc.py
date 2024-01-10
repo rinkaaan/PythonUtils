@@ -1,6 +1,9 @@
 import datetime
 import os
+import re
 import subprocess
+
+from marshmallow import ValidationError
 
 
 def run_command(command, verbose=False):
@@ -58,3 +61,9 @@ def rename_substring_in_files(root_dir, old_substring, new_substring, file_exten
 
 def get_timestamp():
     return datetime.datetime.now(datetime.timezone.utc)
+
+
+def validate_ksuid(value):
+    ksuid_pattern = re.compile(r'^[A-Za-z0-9]{27}$')
+    if not ksuid_pattern.match(value):
+        raise ValidationError('Invalid KSUID format')
