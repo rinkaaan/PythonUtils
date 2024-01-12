@@ -41,7 +41,7 @@ def init_postgres_db(base, host="127.0.0.1"):
 def init_sqlite_db(base, path="sqlite.db"):
     engine = create_engine(f"sqlite:///{path}", echo=True)
     session = scoped_session(
-        sessionmaker(autoflush=False, bind=engine)
+        sessionmaker(autoflush=True, bind=engine)
     )
     base.query = session.query_property()
     base.metadata.create_all(bind=engine)

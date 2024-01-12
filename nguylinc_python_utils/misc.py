@@ -3,6 +3,7 @@ import os
 import re
 import subprocess
 
+from ksuid import Ksuid
 from marshmallow import ValidationError
 
 
@@ -61,6 +62,10 @@ def rename_substring_in_files(root_dir, old_substring, new_substring, file_exten
 
 def get_timestamp():
     return datetime.datetime.now(datetime.timezone.utc)
+
+
+def get_ksuid():
+    return str(Ksuid())
 
 
 def validate_ksuid(value):
